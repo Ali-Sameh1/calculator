@@ -27,9 +27,12 @@ operators.forEach(op => op.addEventListener('click' , e => {
 
 
 equal.addEventListener('click' , ()=> {
-    calculate();
-    previousDisplay.textContent = '';
-    currentDisplay.textContent = previousNumber;
+    if (currentNumber != '' && previousNumber != ''){
+        calculate();
+        previousDisplay.textContent = '';
+        currentDisplay.textContent = previousNumber;
+    }
+    
 })
 
 
@@ -37,6 +40,12 @@ clear.addEventListener('click' , ()=>{
     clearDisplay();
     previousDisplay.textContent = '';
     currentDisplay.textContent = '';
+})
+
+
+decimal.addEventListener('click' , ()=> {
+    addDecimal();
+    currentDisplay.textContent = currentNumber
 })
 
 function handleNumber (num){
@@ -59,17 +68,27 @@ function calculate (){
     currentNumber = Number(currentNumber);
 
     if (operator === '+'){
-        previousNumber = currentNumber
+        previousNumber += currentNumber;
+        currentNumber = previousNumber;
     }
     else if (operator === '-'){
-        previousNumber -= currentNumber
+        previousNumber -= currentNumber;
+        currentNumber = previousNumber;
     }
     else if (operator === 'x'){
-        previousNumber *= currentNumber
+        previousNumber *= currentNumber;
+        currentNumber = previousNumber;
     }
     else {
-        previousNumber /= currentNumber
+        previousNumber /= currentNumber;
+        currentNumber = previousNumber;
     }
+
+    previousNumber = roundNumber(previousNumber);
+    currentNumber = previousNumber;
+
+    previousNumber = previousNumber.toString();
+    currentNumber = currentNumber.toString();
 }
 
 
@@ -77,4 +96,16 @@ function clearDisplay () {
     currentNumber = '';
     previousNumber = '';
     operator = '';
+}
+
+
+function roundNumber (num){
+    return Math.round(num * 100000)/100000 ;
+}
+
+
+function addDecimal (){
+    if (!currentNumber.includes('.')){
+        currentNumber += '.';
+    }
 }
