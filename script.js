@@ -1,7 +1,6 @@
 let operator = '';
 let previousNumber = '';
 let currentNumber = '';
-let result = '';
 
 
 const numbers = document.querySelectorAll('.number');
@@ -30,7 +29,7 @@ operators.forEach(op => op.addEventListener('click' , e => {
 equal.addEventListener('click' , ()=> {
     calculate();
     previousDisplay.textContent = '';
-    currentDisplay.textContent = result;
+    currentDisplay.textContent = previousNumber;
 })
 
 
@@ -60,7 +59,7 @@ function calculate (){
     currentNumber = Number(currentNumber);
 
     if (operator === '+'){
-        result = previousNumber + currentNumber;
+        previousNumber = currentNumber
     }
     else if (operator === '-'){
         previousNumber -= currentNumber
